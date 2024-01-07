@@ -35,24 +35,30 @@ class PodzbioryZbioruPrzyklad(Scene):
 
 class PodzbioryZbioruPrzejscieDoWiekszego(Scene):
     def construct(self):
-        zbior = MathTex(r"\{1,2,3,4,\cdots,n\}")
+        zbior = MathTex(r"\{1,2,3,4,\ldots,n\}")
         podzbiory = [
-            MathTex(r"\{\emptyset\}"),
-            MathTex(r"\{1\}"),
-            MathTex(r"\{1,2,3\}"),
+            MathTex("\{", "\emptyset", "\}"),
+            MathTex("\{", "1", "\}"),
+            MathTex(r"\{", "1", ",", "2", ",", "3", "\}"),
             MathTex(r"\vdots"),
-            MathTex(r"\{1,2,3,\cdots,n\}")
+            MathTex(r"\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", "\}"),
         ]
         
         self.play(Write(zbior))
         self.play(zbior.animate.shift(4 * LEFT))
 
-        podzbiory[0].shift(4 * RIGHT + 1 * UP)
+        self.wyswietl_podzbiory(podzbiory, pozycja_poczatkowa=4 * RIGHT + 1.5 * UP)
+
+        zbior2 = MathTex(r"\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", ",", "n+1", "\}").shift(4 * LEFT)
+        # todo: TransformMatchingTex
+        self.play(Transform(zbior, zbior2))
+
+    def wyswietl_podzbiory(self, podzbiory, pozycja_poczatkowa):
+        podzbiory[0].shift(pozycja_poczatkowa)
         self.play(Write(podzbiory[0]))
 
         for poprzedni_podzbior, podzbior in zip(podzbiory, podzbiory[1:]):
             podzbior.next_to(poprzedni_podzbior, DOWN)
             self.play(Write(podzbior))
-
 
 
