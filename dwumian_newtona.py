@@ -35,30 +35,49 @@ class PodzbioryZbioruPrzyklad(Scene):
 
 class PodzbioryZbioruPrzejscieDoWiekszego(Scene):
     def construct(self):
-        zbior = MathTex(r"\{1,2,3,4,\ldots,n\}")
-        podzbiory = [
-            MathTex("\{", "\emptyset", "\}"),
+        zbior = MathTex(
+            r"\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", "\}",
+        )
+        podzbiory = VGroup(
+            MathTex(r"\emptyset"),
             MathTex("\{", "1", "\}"),
-            MathTex(r"\{", "1", ",", "2", ",", "3", "\}"),
+            MathTex("\{", "1", ",", "2", ",", "3", "\}"),
             MathTex(r"\vdots"),
-            MathTex(r"\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", "\}"),
-        ]
+            MathTex("\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", "\}"),
+        )
         
         self.play(Write(zbior))
         self.play(zbior.animate.shift(4 * LEFT))
 
         self.wyswietl_podzbiory(podzbiory, pozycja_poczatkowa=4 * RIGHT + 1.5 * UP)
 
-        zbior2 = MathTex(r"\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", ",", "n+1", "\}").shift(4 * LEFT)
-        # todo: TransformMatchingTex
-        self.play(Transform(zbior, zbior2))
+        zbior2 = MathTex(
+            r"\{", "1", ",", "2", ",", "3", ",", "4", ",", "\ldots", ",", "n", ",", "n+1", "\}",
+            tex_to_color_map={"n+1" : YELLOW}
+        ).shift(4 * LEFT)
+        self.play(TransformMatchingTex(zbior, zbior2))
+
+        for podzbior in podzbiory:
+            podzbior.shift(4 * LEFT)
+
+        # przesun zbior podstawowy na sama gore
+        
+
+        # przesun podzbiory na lewo
+            
+        # zrob wiecej miejsca miedzy nimi
+            
+        # dodaj strzalki rozbijajace podzbiory na dwie czesci
+        
+
+        
 
     def wyswietl_podzbiory(self, podzbiory, pozycja_poczatkowa):
         podzbiory[0].shift(pozycja_poczatkowa)
-        self.play(Write(podzbiory[0]))
 
         for poprzedni_podzbior, podzbior in zip(podzbiory, podzbiory[1:]):
             podzbior.next_to(poprzedni_podzbior, DOWN)
-            self.play(Write(podzbior))
+        
+        self.play(Write(podzbiory))
 
 
